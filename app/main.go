@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/xitongsys/parquet-go-source/local"
 	"github.com/xitongsys/parquet-go/parquet"
@@ -8,6 +9,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+)
+
+var (
+	appPort = 8888
 )
 
 // Person struct represents the structure of the JSON object.
@@ -87,8 +92,9 @@ func main() {
 	r := gin.Default()
 	setupRoutes(r)
 
-	log.Printf("Starting server on port 8081")
-	if err := r.Run(":8081"); err != nil {
+	log.Printf("Starting server on port %d\n", appPort)
+	portGin := fmt.Sprintf(":%d", appPort)
+	if err := r.Run(portGin); err != nil {
 		log.Fatalf("Could not start server: %s\n", err.Error())
 	}
 }

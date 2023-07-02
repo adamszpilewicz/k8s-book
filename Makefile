@@ -46,5 +46,17 @@ list_namespaces:
 describe_deployment:
 	kubectl describe deploy go-app-deployment -n k8s-book
 
-describe-rs:
+describe_rs:
 	kubectl get rs -n k8s-book
+
+describe_rs_number:
+	kubectl describe rs go-app-deployment-748bc895c4 -n k8s-book
+
+describe_rs_number_current:
+	kubectl describe rs go-app-deployment-7c4889b4b6 -n k8s-book
+
+get_rollout_history:
+	kubectl rollout history deployment go-app-deployment -n k8s-book
+
+undo_rollout:
+	kubectl rollout undo deployment go-app-deployment -n k8s-book --to-revision=3
