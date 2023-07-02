@@ -42,3 +42,9 @@ create_ns_k8s_book:
 
 list_namespaces:
 	kubectl get namespaces
+
+describe_deployment:
+	kubectl describe deploy go-app-deployment -n k8s-book
+
+describe-rs:
+	kubectl get rs -n k8s-book

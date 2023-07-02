@@ -6,7 +6,7 @@ metadata:
   labels:
     app: go-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: go-app
@@ -17,11 +17,19 @@ spec:
     spec:
       containers:
         - name: go-app
-          image: 871201/app-status:v0.0.1
+          image: 871201/app-status:v0.0.2
           ports:
             - containerPort: 8081
           env:
             - name: MY_ENV_VAR
               value: "Env variable injected from Kubernetes"
         - name: go-checker
-          image: 871201/app-checker:v0.0.1
+          image: 871201/app-checker:v0.0.2
+  revisionHistoryLimit: 3
+  progressDeadlineSeconds: 300
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
