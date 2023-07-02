@@ -1,0 +1,46 @@
+name: Build and Push Docker images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        id: semver
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push app-status
+        uses: docker/build-push-action@v2
+        with:
+          context: ./app
+          push: true
+          tags: 871201/app-status:${{ steps.semver.outputs.new_tag }}
+
+      - name: Build and push app-checker
+        uses: docker/build-push-action@v2
+        with:
+          context: ./checker
+          push: true
+          tags: 871201/app-checker:${{ steps.semver.outputs.new_tag }}
