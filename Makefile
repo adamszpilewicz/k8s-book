@@ -60,3 +60,9 @@ get_rollout_history:
 
 undo_rollout:
 	kubectl rollout undo deployment go-app-deployment -n k8s-book --to-revision=3
+
+inspect_service:
+	kubectl get svc go-app-service -n k8s-book # -o yaml
+
+get_endpointsslice:
+	kubectl get endpointslices -n k8s-book

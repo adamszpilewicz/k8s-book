@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: go-app
-          image: 871201/app-status:v0.0.4
+          image: 871201/app-status:v0.0.5
           ports:
             - containerPort: 8081
           env:
             - name: MY_ENV_VAR
               value: "Env variable injected from Kubernetes"
         - name: go-checker
-          image: 871201/app-checker:v0.0.4
+          image: 871201/app-checker:v0.0.5
   revisionHistoryLimit: 3
   progressDeadlineSeconds: 300
   minReadySeconds: 5

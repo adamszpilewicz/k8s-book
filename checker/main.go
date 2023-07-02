@@ -1,14 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
 )
 
+var (
+	appPort = 8888
+)
+
 func main() {
 	for {
-		resp, err := http.Get("http://localhost:8081/status")
+		url := fmt.Sprintf("http://localhost:%d", appPort)
+		resp, err := http.Get(fmt.Sprintf("%s/status", url))
 		if err != nil {
 			log.Printf("Could not reach the service: %s\n", err.Error())
 			log.Printf("Service Status: FAIL\n")
