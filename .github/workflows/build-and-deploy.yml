@@ -38,6 +38,7 @@ jobs:
           context: ./app
           push: true
           tags: 871201/app-status:${{ steps.semver.outputs.new_tag }}
+          platforms: linux/amd64,linux/arm64
 
       - name: Build and push app-checker
         uses: docker/build-push-action@v2
@@ -45,3 +46,4 @@ jobs:
           context: ./checker
           push: true
           tags: 871201/app-checker:${{ steps.semver.outputs.new_tag }}
+          platforms: linux/amd64,linux/arm64
