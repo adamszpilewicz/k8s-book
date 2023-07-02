@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: k8s-book
+  name: go-app-deployment
+  labels:
+    app: go-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+        - name: go-app
+          image: 871201/app-status:v1
+          ports:
+            - containerPort: 8081
+          env:
+            - name: MY_ENV_VAR
+              value: "Env variable injected from Kubernetes"
+        - name: go-checker
+          image: 871201/app-checker:v1
